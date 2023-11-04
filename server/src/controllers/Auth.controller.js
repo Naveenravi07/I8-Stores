@@ -14,7 +14,7 @@ AuthRouter.post('/signup',async(req,res)=>{
         pwd = await bcrypt.hash(pwd,10)
         let user = await new userModel({firstname,lastname,pwd,email}).save() 
         delete user.pwd
-        let token = jwt.sign({firstname,lastname,email},process.env.JWTSECRET)
+        let token = jwt.sign({firstname,lastname,email,id:user.id},process.env.JWTSECRET)
         return res.json({msg:"Signup success",token:token})
     }catch(err){
         console.log("err occured"+err)
@@ -33,7 +33,7 @@ AuthRouter.post('/login',async(req,res)=>{
             console.log(pwdVerify)
             if(!pwdVerify)  res.json({msg:'incorrect password'})
             delete userCheck.pwd
-            let token = jwt.sign({firstname:userCheck.firstname,lastname:userCheck.lastname,email:userCheck.email},process.env.JWTSECRET)
+            let token = jwt.sign({firstname:userCheck.firstname,lastname:userCheck.lastname,email:userCheck.email,id:userCheck.id},process.env.JWTSECRET)
             return res.json({msg:"Login success",token:token})
         }
     }catch(err){
