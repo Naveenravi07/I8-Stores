@@ -18,11 +18,17 @@ AdminRouter.post('/product/create', async (req, res) => {
     } catch (err) { console.log(err); }
 });
 
-AdminRouter.get('/prduct/all', async (req, res) => {
+AdminRouter.get('/product/all', async (req, res) => {
     try {
-        const products = await productModel.find()
-        return products;
+        const product = await productModel.find()
+        return res.json({data:product});
     } catch (err) { console.log(err); }
 });
 
+AdminRouter.get('/product/get', async (req, res) => {
+    try {
+        const product = await productModel.findById(req.query.id);
+        return res.json({data:product});
+    } catch (err) { console.log(err); }
+}); 
 module.exports = { AdminRouter }
