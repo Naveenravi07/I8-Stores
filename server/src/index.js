@@ -1,7 +1,7 @@
 const express = require('express')
 const {AuthRouter} = require('./controllers/Auth.controller');
 const { connectDb } = require('./database/database');
-const { AuthMiddileWare } = require('./middlewares/auth.middleware');
+const {AuthMiddileWare} = require('./middlewares/auth.middleware')
 
 const PORT = 42069;
 const app = express();
