@@ -5,7 +5,7 @@ Long Description about project. This project do that. This project is awesome...
 1. Naveen Ravi [https://github.com/Naveenravi07]
 2. Suraj P A [https://github.com/SurajPa05]
 3. Manu Madhu []
-4. Issac Paul []
+4. Issac Paul [https://github.com/Issacpaulgithub]
 ## Team Id
 innov8
 ## Link to product walkthrough
