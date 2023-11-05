@@ -1,6 +1,7 @@
 const { Router, request } = require('express');
-const { userModel } = require('../database/schema');
+const { productModel } = require('../database/schema');
 const { admins } = require('../config.json');
+
 
 const AdminRouter = Router();
 
@@ -9,19 +10,19 @@ AdminRouter.post('/product/create', async (req, res) => {
     try {
         let { prodName, prodbrand, prodprice, prodctg, proddesc, prodimg } = req.body
         if (admins.includes(request.headers.data.id)) {
-            let user = await new userModel({ prodName, prodbrand, prodprice, prodctg, proddesc, prodimg }).save()
+            let product = await new productModel({ prodName, prodbrand, prodprice, prodctg, proddesc, prodimg }).save()
+            return res.json({ data: product })
         } else {
-            console.log("Not enough permission to perform this");
+            return res.json({ msg: "You don't have enough permission" })
         }
-
-    } catch (err) {
-
-    }
-
-
+    } catch (err) { console.log(err); }
 });
 
-
-
+AdminRouter.get('/prduct/all', async (req, res) => {
+    try {
+        const products = await productModel.find()
+        return products;
+    } catch (err) { console.log(err); }
+});
 
 module.exports = { AdminRouter }
