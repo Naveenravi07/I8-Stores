@@ -1,4 +1,4 @@
-const { Router, request } = require('express');
+const { Router} = require('express');
 const { productModel } = require('../database/schema');
 const { admins } = require('../config.json');
 
@@ -9,11 +9,11 @@ AdminRouter.post('/product/create', async (req, res) => {
     console.log("adminrouter !")
     try {
         let { prodName, prodbrand, prodprice, prodctg, proddesc, prodimg } = req.body
-        if (admins.includes(request.headers.data.id)) {
+        if (admins.includes(req.headers.data.id)) {
             let product = await new productModel({ prodName, prodbrand, prodprice, prodctg, proddesc, prodimg }).save()
-            return res.json({ data: product })
+            return res.status(200).json({ data: product })
         } else {
-            return res.json({ msg: "You don't have enough permission" })
+            return res.status(401).json({ msg: "You don't have enough permission" })
         }
     } catch (err) { console.log(err); }
 });

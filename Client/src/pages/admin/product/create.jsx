@@ -1,7 +1,13 @@
 import instance from '@/Helpers/Config/axios.config';
+import {  useRouter } from 'next/router';
 import React, { useState } from 'react';
 import { toast } from "react-toastify";
+
+
 export default function Create() {
+
+    let router = useRouter()
+
     const [prodName, setprodName] = useState();
     const [prodbrand, setprodBrand] = useState();
     const [prodprice, setprodPrice] = useState();
@@ -17,13 +23,10 @@ export default function Create() {
                 if (response.status === 200) {
                     toast("Succsefully Saved")
                     router.push('/')
-                } else {
-                    toast(response.data.msg)
-                }
+                } 
             })
-            .catch((err) => {
-                console.log(err)
-                toast.error("Error occured")
+            .catch((err)=>{
+                toast.dark(err.response.data?.msg)
             })
     };
     return (

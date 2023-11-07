@@ -6,9 +6,13 @@ import appleimg from '../../../public/apple.png'
 import { useRouter } from "next/router";
 import instance from "../../Helpers/Config/axios.config";
 import { toast } from "react-toastify";
+import {useDispatch} from "react-redux"
+import {loginUser} from "../../Store/Auth.Slice"
 
 export default function Login() {
     let router = useRouter()
+    const dispatch = useDispatch();
+
     let [email,setEmail] = useState();
     let [pwd,setpwd] = useState();
     
@@ -18,6 +22,7 @@ export default function Login() {
         .then((response)=>{
             if(response.status===200){
                 toast("Login sucess")
+                dispatch(loginUser({token:response.data.token}))
                 router.push('/')
             }else{
                 toast(response.data.msg)
