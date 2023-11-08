@@ -17,8 +17,14 @@ const productSchema = new mongoose.Schema({
     prodqunt: { type: Number, required: false },
 })
 
+const usercartscema= new mongoose.Schema({
+    userid:{type:String,require:true},
+    products:{type:Array,default:[]}
+})
+
 
 let userModel = mongoose.model('users', userSchema)
 let productModel = mongoose.model('product', productSchema)
+let cartModel=mongoose.model('cart',usercartscema)
 
-module.exports = { userModel, productModel }
+module.exports = { userModel, productModel,cartModel }

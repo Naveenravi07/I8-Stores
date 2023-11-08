@@ -31,4 +31,5 @@ AdminRouter.get('/product/get', async (req, res) => {
         return res.json({data:product});
     } catch (err) { console.log(err); }
 }); 
+
 module.exports = { AdminRouter }
