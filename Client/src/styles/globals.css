@@ -725,3 +725,421 @@ body {
 
 
 
+
+* {
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body {
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(245, 243, 243);
+}
+
+section {
+    display: flex;
+    flex-direction: row;
+    gap: rem;
+}
+
+.ProductDetails {
+    height: 30rem;
+    width: 60rem;
+    /* border: 1px solid red; */
+}
+
+
+
+
+table {
+
+    background-color: rgb(255, 254, 254);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 60rem;
+    align-items: center;
+    border-collapse: collapse;
+}
+
+th {
+    width: 15rem;
+    height: 5rem;
+    font-family: Arial, Helvetica, sans-serif;
+    color: rgb(126, 126, 126);
+    font-size: 0.9rem;
+    font-weight: 100;
+}
+
+th:nth-child(1) {
+    border-top-left-radius: 0.5rem;
+}
+
+th:nth-child(4) {
+    border-top-right-radius: 0.5rem;
+}
+
+td {
+    text-align: center;
+    height: 8em;
+    border: 3px solid rgba(224, 224, 224, 0.712);
+    font-family: Arial, Helvetica, sans-serif;
+    color: rgb(114, 114, 114);
+    font-weight: 400;
+}
+
+
+td {
+    border-left: none;
+    border-right: none;
+    border-collapse: collapse;
+}
+
+
+table img {
+
+    height: 5rem;
+}
+
+.pcount {
+    display: flex;
+    gap: 0.6rem;
+    justify-content: center;
+    align-items: center;
+}
+
+.pcount button {
+    background-color: transparent;
+    border: none;
+    outline: none;
+    font-size: 1.2rem;
+}
+
+.pcount span {
+    background-color: white;
+    border: 1px solid rgb(209, 209, 209);
+    padding: 0.3rem 0.3rem;
+}
+
+.CardAndCheckout {
+    background-color: rgb(247, 246, 247);
+    height: 29rem;
+    width: 20rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    padding: 1.8rem 1.8rem;
+}
+
+
+.CardAndCheckout p {
+    font-family: sans-serif;
+
+}
+
+.CardAndCheckout p:nth-child(1) {
+    font-weight: 600;
+    color: #545454;
+    font-size: 1.3rem;
+}
+
+.CardAndCheckout p:nth-child(1)::after {
+    content: '';
+    display: flex;
+    width: 14rem;
+    height: 0.05rem;
+    margin-top: 0.5rem;
+    background-color: rgb(173, 173, 173);
+}
+
+.CardAndCheckout p:nth-child(2) {
+    color: #8A8B8B;
+    font-weight: 600;
+    letter-spacing: -1px;
+}
+
+.CardAndCheckout p:nth-child(3) {
+    color: #8A8B8B;
+    font-weight: 600;
+    margin-top: 1rem;
+}
+
+
+.CardAndCheckout input {
+    outline: none;
+    padding-left: 1rem;
+    border: none;
+    height: 2rem;
+    border-radius: 0.3rem;
+    width: 14rem;
+}
+
+.CardAndCheckout .apply {
+    margin-top: -1rem;
+    border: none;
+    height: 2rem;
+    width: 5rem;
+    letter-spacing: 0.1rem;
+    color: white;
+    background-color: rgb(251, 117, 116);
+}
+
+.CardAndCheckout .checkbtn::after {
+    content: '';
+    display: flex;
+    width: 14rem;
+    height: 0.05rem;
+    margin-top: 2rem;
+    background-color: rgb(173, 173, 173);
+}
+
+.CardAndCheckout div {
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: 600;
+    color: rgb(0, 0, 0);
+}
+
+/* 
+.checkbtn {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+
+} */
+
+.CardAndCheckout .checkout {
+    border: none;
+    height: 3em;
+    border-radius: 0.3rem;
+    width: 100%;
+    letter-spacing: 0.1rem;
+    color: white;
+    background-color: rgb(92, 80, 218);
+}
+
+.subtotal {
+    display: flex;
+    justify-content: space-between;
+
+}
+
+.subtotal div,
+span {
+    color: #8A8B8B;
+
+}
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body {
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(245, 243, 243);
+}
+
+section {
+    display: flex;
+    flex-direction: row;
+    gap: rem;
+}
+
+.ProductDetails {
+    height: 30rem;
+    width: 60rem;
+    /* border: 1px solid red; */
+}
+
+
+
+
+table {
+
+    background-color: rgb(255, 254, 254);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 60rem;
+    align-items: center;
+    border-collapse: collapse;
+}
+
+th {
+    width: 15rem;
+    height: 5rem;
+    font-family: Arial, Helvetica, sans-serif;
+    color: rgb(126, 126, 126);
+    font-size: 0.9rem;
+    font-weight: 100;
+}
+
+th:nth-child(1) {
+    border-top-left-radius: 0.5rem;
+}
+
+th:nth-child(4) {
+    border-top-right-radius: 0.5rem;
+}
+
+td {
+    text-align: center;
+    height: 8em;
+    border: 3px solid rgba(224, 224, 224, 0.712);
+    font-family: Arial, Helvetica, sans-serif;
+    color: rgb(114, 114, 114);
+    font-weight: 400;
+    border-left: none;
+    border-right: none;
+    border-collapse: collapse;
+}
+
+
+
+
+table img {
+
+    height: 5rem;
+}
+
+.pcount {
+    display: flex;
+    gap: 0.6rem;
+    justify-content: center;
+    align-items: center;
+}
+
+.pcount button {
+    background-color: transparent;
+    border: none;
+    outline: none;
+    font-size: 1.2rem;
+}
+
+.pcount span {
+    background-color: white;
+    border: 1px solid rgb(209, 209, 209);
+    padding: 0.3rem 0.3rem;
+}
+
+.CardAndCheckout {
+    background-color: rgb(247, 246, 247);
+    height: 29rem;
+    width: 20rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    padding: 1.8rem 1.8rem;
+}
+
+
+.CardAndCheckout p {
+    font-family: sans-serif;
+
+}
+
+.CardAndCheckout p:nth-child(1) {
+    font-weight: 600;
+    color: #545454;
+    font-size: 1.3rem;
+}
+
+.CardAndCheckout p:nth-child(1)::after {
+    content: '';
+    display: flex;
+    width: 14rem;
+    height: 0.05rem;
+    margin-top: 0.5rem;
+    background-color: rgb(173, 173, 173);
+}
+
+.CardAndCheckout p:nth-child(2) {
+    color: #8A8B8B;
+    font-weight: 600;
+    letter-spacing: -1px;
+}
+
+.CardAndCheckout p:nth-child(3) {
+    color: #8A8B8B;
+    font-weight: 600;
+    margin-top: 1rem;
+}
+
+
+.CardAndCheckout input {
+    outline: none;
+    padding-left: 1rem;
+    border: none;
+    height: 2rem;
+    border-radius: 0.3rem;
+    width: 14rem;
+}
+
+.CardAndCheckout .apply {
+    margin-top: -1rem;
+    border: none;
+    height: 2rem;
+    width: 5rem;
+    letter-spacing: 0.1rem;
+    color: white;
+    background-color: rgb(251, 117, 116);
+}
+
+.CardAndCheckout .checkbtn::after {
+    content: '';
+    display: flex;
+    width: 14rem;
+    height: 0.05rem;
+    margin-top: 2rem;
+    background-color: rgb(173, 173, 173);
+}
+
+.CardAndCheckout div {
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: 600;
+    color: rgb(0, 0, 0);
+}
+
+/* 
+.checkbtn {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+
+} */
+
+.CardAndCheckout .checkout {
+    border: none;
+    height: 3em;
+    border-radius: 0.3rem;
+    width: 100%;
+    letter-spacing: 0.1rem;
+    color: white;
+    background-color: rgb(92, 80, 218);
+}
+
+.subtotal {
+    display: flex;
+    justify-content: space-between;
+
+}
+
+.subtotal div,
+span {
+    color: #8A8B8B;
+
+}
+
