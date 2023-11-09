@@ -7,7 +7,7 @@ export default function all(){
     let [products,setProducts] = useState([])
     
     const fetch_all_products = async() =>{
-        await instance.get('/admin/product/all')
+        await instance.get('/user/product/all')
         .then((response)=>setProducts(response.data.data))
         .catch((err)=>toast("Error Occcured"))
     }
