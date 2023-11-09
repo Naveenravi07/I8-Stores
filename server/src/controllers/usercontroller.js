@@ -7,8 +7,23 @@ let userrouter=Router()
 userrouter.get('/product/all', async (req, res) => {
     try {
         const product = await productModel.find()
-        return res.json({data:product});
+        const totalproductsincart=await cartModel.findOne({userid:"400"});
+        console.log(totalproductsincart)
+    let total=0;
+   
+    if(totalproductsincart!=null){
+        let productarr=totalproductsincart.products;
+        for(let i=0;i<productarr.length;i++){
+            var orgintotal=productarr[i].quntity;
+            total=total+orgintotal;
+        }
+        console.log(total);
+    }
+
+        return res.json({data:product,cartcount:total});
     } catch (err) { console.log(err); }
+
+    
 });
 
 userrouter.get('/product/get', async (req, res) => {
@@ -28,9 +43,6 @@ userrouter.post("/addtocart",async(req,res)=>{
         prodId:req.body.productid,
         quntity:1
     }
-
-
-
     if(findcart==null ||findcart.products==null || findcart.products==undefined){
       
         const cart=await new cartModel({userid:req.body.userid,products:[product]}).save();
@@ -48,11 +60,8 @@ userrouter.post("/addtocart",async(req,res)=>{
         })
         }  
     }
-      
-     
-
-
 })
+
 
 
 module.exports = { userrouter }
