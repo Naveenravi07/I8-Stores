@@ -107,4 +107,41 @@ userrouter.get("/cart",async(req,res)=>{
     return res.status(200).json({data:{products:cartcoll,totalPriceInCart:totalPrice}})
 })
 
+
+
+
+
+//ippo chyadadhu he he
+
+userrouter.patch("/cart/incordecincart",async(req,res)=>{
+    let count=parseInt(req.body.count);
+    console.log(count)
+    let quntity=parseInt(req.body.quntity);
+    console.log(quntity)
+    console.log(req.headers.data.id)
+    console.log(req.body.productid)
+
+    if(quntity==1 && count==-1){
+       await cartModel.findOneAndUpdate({userid:req.headers.data.id},{
+          $pull:{products:{prodId:new ObjectId(req.body.productid)}}},{new:true})
+    }else{
+    await  cartModel.findOneAndUpdate({userid:req.headers.data.id,"products.prodId":new ObjectId(req.body.productid)},{
+        $inc:{"products.$.quntity":count}
+    })
+    }
+    
+})
+
+//ok
+userrouter.patch("/cart/remove",async(req,res)=>{
+    console.log(req.body.productid)
+    console.log(req.headers.data.id)
+    await cartModel.findOneAndUpdate({userid:req.headers.data.id},{
+       $pull:{products:{prodId:new ObjectId(req.body.productid)}}
+   })
+})
+
+
+
+
 module.exports = { userrouter }
