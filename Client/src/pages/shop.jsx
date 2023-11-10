@@ -2,17 +2,18 @@ import instance from "@/Helpers/Config/axios.config"
 import Card from "@/components/card"
 import { toast } from "react-toastify"
 import { useState, useEffect } from 'react'
-import { useRouter } from "next/router";
-
+import { useSelector } from "react-redux"
+import { useRouter } from "next/router"
 
 export default function all() {
-    let router = useRouter();
+    let user = useSelector((state)=>state.auth)
     let [products, setProducts] = useState([])
+    let router = useRouter()
 
     const fetch_all_products = async () => {
         await instance.get('/user/product/all')
             .then((response) => setProducts(response.data.data))
-            .catch((err) => toast("Error Occcured"))
+            .catch((_) => toast("Error Occcured"))
     }
 
     const add_to_cart = async(product) => {
@@ -22,8 +23,13 @@ export default function all() {
     }
 
     useEffect(() => {
-        fetch_all_products()
-    }, [])
+        if(!user || user.token == null || user.loggedIn == false ){
+            toast.dark("You must login")
+            router.push('/auth/login')
+        }else{
+            fetch_all_products()
+        }
+    }, [user])
 
     return (
         <div style={{ display: 'flex', flexDirection: "row", flexWrap: "wrap", gap: '3rem', justifyContent: 'center', marginTop: '30rem' }}>

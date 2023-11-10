@@ -7,7 +7,7 @@ let userrouter = Router()
 userrouter.get('/product/all', async (req, res) => {
     try {
         const product = await productModel.find()
-        const totalproductsincart = await cartModel.findOne({ userid: "400" });
+        const totalproductsincart = await cartModel.findOne({ userid:req.headers.data.id});
         console.log(totalproductsincart)
         let total = 0;
 
