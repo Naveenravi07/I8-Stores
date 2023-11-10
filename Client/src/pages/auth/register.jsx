@@ -6,35 +6,35 @@ import { Router, useRouter } from "next/router";
 import appleimg from '../../../public/apple.png'
 import instance from "@/Helpers/Config/axios.config";
 import { toast } from "react-toastify"
-import {useDispatch} from "react-redux"
-import {loginUser} from "../../Store/Auth.Slice"
+import { useDispatch } from "react-redux"
+import { loginUser } from "../../Store/Auth.Slice"
 
 export default function Login() {
   let router = useRouter();
-    const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
   let [firstname, setfirstname] = useState()
   let [lastname, setlastname] = useState()
   let [email, setemail] = useState()
   let [pwd, setpwd] = useState()
 
-        const handlesignUp = async(e)=>{
-        e.preventDefault()
-        await instance.post('/auth/signup',{firstname,lastname,email,pwd})
-        .then((response)=>{
-            if(response.status===200){
-                toast.dark("Signup sucess")
-                dispatch(loginUser({token:response.data.token}))
-                router.push('/')
-            }else{
-                toast(response.data.msg)
-            }
-        })
-        .catch((err)=>{
-            console.log(err)
-            toast.error("Error occured")
-        })
-    }
+  const handlesignUp = async (e) => {
+    e.preventDefault()
+    await instance.post('/auth/signup', { firstname, lastname, email, pwd })
+      .then((response) => {
+        if (response.status === 200) {
+          toast.dark("Signup sucess")
+          dispatch(loginUser({ token: response.data.token }))
+          router.push('/')
+        } else {
+          toast(response.data.msg)
+        }
+      })
+      .catch((err) => {
+        console.log(err)
+        toast.error("Error occured")
+      })
+  }
 
   return (
     <>

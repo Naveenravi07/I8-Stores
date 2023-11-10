@@ -3,13 +3,13 @@ const { productModel, cartModel, userModel } = require('../database/schema');
 const { default: mongoose } = require('mongoose');
 var ObjectId = require("mongodb").ObjectId;
 
-
-let userrouter=Router()
+let userrouter = Router()
 
 userrouter.get('/product/all', async (req, res) => {
+    console.log("/product/all called !");
     try {
         const product = await productModel.find()
-        const totalproductsincart=await cartModel.findOne({userid:"400"});
+        const totalproductsincart = await cartModel.findOne({ userid: "400" });
         console.log(totalproductsincart)
     let total=0;
    
@@ -22,24 +22,25 @@ userrouter.get('/product/all', async (req, res) => {
          console.log(total);
     }
 
-        return res.json({data:product,cartcount:total});
+        return res.json({ data: product, cartcount: total });
     } catch (err) { console.log(err); }
 
-    
+
 });
 
 userrouter.get('/product/get', async (req, res) => {
+    console.log(req.query.id);
     try {
-        const product = await productModel.findById(req.query.id);
-        return res.json({data:product});
+        const product = await productModel.findOne({ _id: new ObjectId(req.query.id) });
+        return res.json({ data: product });
     } catch (err) { console.log(err); }
-}); 
+});
 
 
 
 
-userrouter.post("/addtocart",async(req,res)=>{
-    let findcart=await cartModel.findOne({userid:req.body.userid})
+userrouter.post("/addtocart", async (req, res) => {
+    let findcart = await cartModel.findOne({ userid: req.body.userid })
 
     const product={
         prodId:new ObjectId(req.body.productid),
@@ -65,8 +66,8 @@ userrouter.post("/addtocart",async(req,res)=>{
             await cartModel.updateOne({userid:req.body.userid},{
             $push:{"products":product}
 
-        })
-        }  
+            })
+        }
     }
 })
 
