@@ -190,7 +190,7 @@ const App = () => {
       </div>
 
       <div style={bottomTextStyle} className="bottom-text">
-        Website developed by manu
+
       </div>
     </div>
   );
