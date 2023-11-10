@@ -4,6 +4,7 @@ import { toast } from "react-toastify"
 import { useState, useEffect } from 'react'
 import { useSelector } from "react-redux"
 import { useRouter } from "next/router"
+import Navbarv2 from '../components/Navbarv2'
 
 export default function all() {
     let user = useSelector((state)=>state.auth)
@@ -32,14 +33,17 @@ export default function all() {
     }, [user])
 
     return (
+        <>
+        <Navbarv2 />
         <div style={{ display: 'flex', flexDirection: "row", flexWrap: "wrap", gap: '3rem', justifyContent: 'center', marginTop: '30rem' }}>
             {
                 products && products.map((item) =>
-                        <Card  prodPrice={item.prodprice} proId={item._id} prodName={item.prodName} prodDesc={item.proddesc} addtoCart={(id)=>add_to_cart(id)} />
+                    <Card  prodPrice={item.prodprice} proId={item._id} prodName={item.prodName} prodDesc={item.proddesc} addtoCart={(id)=>add_to_cart(id)} />
                 )
 
             }
         </div>
+        </>
     )
 }
 

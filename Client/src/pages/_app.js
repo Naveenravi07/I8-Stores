@@ -7,6 +7,7 @@ import Store from '../Store/Store'
 import { PersistGate } from "redux-persist/integration/react";
 import {persistor} from '../../src/Store/Store'
 import instance from '@/Helpers/Config/axios.config';
+import Navbarv2 from '../components/Navbarv2'
 
 export default function App({ Component, pageProps }) {
     useEffect(()=>{
@@ -22,6 +23,7 @@ export default function App({ Component, pageProps }) {
         <Provider store={Store}>
         <PersistGate loading={null} persistor={persistor} >
         <div>
+        <Navbarv2 />
         <ToastContainer />
         <Component {...pageProps} />
         </div>

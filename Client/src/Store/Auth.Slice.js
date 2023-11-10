@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { storage,persistor } from '../Store/Store'
 
 const AuthSlice = createSlice({
     name: 'auth',
@@ -8,7 +9,11 @@ const AuthSlice = createSlice({
             state.loggedIn = true;
             state.token = action.payload.token
         },
+        logoutUser: async(state) => {
+            await storage.removeItem('persist:root')
+            Object.keys(state).map((key)=>state[key] = null )
+        },
     }
 })
 export default AuthSlice.reducer
-export const {loginUser} = AuthSlice.actions
+export const {loginUser,logoutUser} = AuthSlice.actions
