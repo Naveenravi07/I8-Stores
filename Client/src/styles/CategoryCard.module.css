@@ -3,11 +3,13 @@
   flex: 1 1 auto;
   position: relative;
 }
+
 .image {
   object-fit: cover;
   border: 2px solid black;
   transition: all 5s cubic-bezier(0.14, 0.96, 0.91, 0.6);
 }
+
 .info {
   position: absolute;
   top: 50%;
@@ -20,9 +22,11 @@
   border: 1px solid black;
   cursor: pointer;
 }
+
 .card:hover .image {
   transform: scale(1.2);
 }
+
 .card:hover .info {
   opacity: 0.9;
 }

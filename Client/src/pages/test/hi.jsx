@@ -10,14 +10,14 @@ const ShoppingCart = () => {
                 <div class="ProductDetails">
 
                     <table>
-                        <tbody>
-                            <tr>
-                                <th>Items</th>
-                                <th></th>
-                                <th>Quantity</th>
-                                <th>Remove</th>
-                            </tr>
-                        </tbody>
+
+                        <tr>
+                            <th>Items</th>
+                            <th></th>
+                            <th>Quantity</th>
+                            <th>Remove</th>
+                        </tr>
+
 
                         <tr>
                             <td><img src="https://upload.wikimedia.org/wikipedia/commons/e/e4/AVANT-P870DMG-GAMING-LAPTOP.png"
