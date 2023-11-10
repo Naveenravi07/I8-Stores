@@ -1,26 +1,23 @@
 const { Router} = require('express');
-const { productModel, cartModel, userModel } = require('../database/schema');
-const { default: mongoose } = require('mongoose');
+const { productModel, cartModel } = require('../database/schema');
 var ObjectId = require("mongodb").ObjectId;
 
 let userrouter = Router()
 
 userrouter.get('/product/all', async (req, res) => {
-    console.log("/product/all called !");
     try {
         const product = await productModel.find()
         const totalproductsincart = await cartModel.findOne({ userid: "400" });
         console.log(totalproductsincart)
-    let total=0;
-   
-    if(totalproductsincart!=null){
-        let productarr=totalproductsincart.products;
-        for(let i=0;i<productarr.length;i++){
-            var orgintotal=productarr[i].quntity;
-            total=total+orgintotal;
+        let total = 0;
+
+        if (totalproductsincart != null) {
+            let productarr = totalproductsincart.products;
+            for (let i = 0; i < productarr.length; i++) {
+                var orgintotal = productarr[i].quntity;
+                total = total + orgintotal;
+            }
         }
-         console.log(total);
-    }
 
         return res.json({ data: product, cartcount: total });
     } catch (err) { console.log(err); }
@@ -37,45 +34,40 @@ userrouter.get('/product/get', async (req, res) => {
 });
 
 
-
-
-userrouter.post("/addtocart", async (req, res) => {
-    let findcart = await cartModel.findOne({ userid: req.body.userid })
+userrouter.post("/addtocart",async(req,res)=>{
+    if(!req.headers.data) return
+    let findcart=await cartModel.findOne({userid:req.headers.data.id})
 
     const product={
         prodId:new ObjectId(req.body.productid),
         quntity:1
     }
-    
+
     if(findcart==null ||findcart.products==null || findcart.products==undefined){
-      
-        const cart=await new cartModel({userid:req.body.userid,products:[product]}).save();
-        console.log(cart)
+
+        const cart=await new cartModel({userid:req.headers.data.id,products:[product]}).save();
+        res.status(200).send({data:cart})
     }else{
         let convert=new ObjectId(req.body.productid)
-        console.log(convert)
-        console.log(findcart.products)
         let sameelem=findcart.products.findIndex(product=>product.prodId.toString() === convert.toString())
         console.log(sameelem)
-       
         if(sameelem !=-1){
-
-            await cartModel.updateOne({'products.prodId':convert},{
-                $inc:{'products.$.quntity':1}})
+            let cart = await cartModel.findOneAndUpdate({userid:req.headers.data.id,'products.prodId':convert},{
+                $inc:{'products.$.quntity':1}},{new:true})
+            res.status(200).send({data:cart})
         }else{
-            await cartModel.updateOne({userid:req.body.userid},{
-            $push:{"products":product}
-
-            })
+            let cart = await cartModel.findOneAndUpdate({userid:req.headers.data.id},{
+                $push:{products:product}})
+            res.status(200).send({data:cart})
         }
     }
 })
 
 
-  userrouter.get("/cart",async(req,res)=>{
+userrouter.get("/cart",async(req,res)=>{
     let cartcoll=await cartModel.aggregate([
         {
-            $match:{userid:"200"}
+            $match:{userid:req.headers.data.id}
         },
         {
             $unwind: "$products"
@@ -99,63 +91,20 @@ userrouter.post("/addtocart", async (req, res) => {
             $project:{
                 item:1,
                 quntity:1,
-                productdetails: { $arrayElemAt: [ "$newcollection", 0 ] }
+                productdetails: { $arrayElemAt: [ "$newcollection", 0 ] },
             }
-        }
-
-    ]).exec()
-     console.log(cartcoll)
-  })
-
-
-userrouter.get("/usercart",(req,res)=>{
-   async function  totalprice(){
-        let totalproductprice=await cartModel.aggregate([
-        {
-            $match:{userid:"200"}
-        },
-        {
-            $unwind: "$products"
-        },
-        {
-            $project:{
-                item:"$products.prodId",
-                quntity:"$products.quntity"
-            }
-        },
-        {
-            $lookup:{
-                from:"products",
-                localField:"item",
-                foreignField:"_id",
-                as:"newcollection"
-            }
-
         },
         {
             $project:{
                 item:1,
                 quntity:1,
-                productdetails: { $arrayElemAt: [ "$newcollection", 0 ] }
+                productdetails: 1,
+                total:{$sum:{$multiply:["$quntity","$productdetails.prodprice"]}}
             }
         },
-        {
-            $group:{
-                _id:null,
-               total:{$sum:{$multiply:["$quntity","$productdetails.prodprice"]}}
-            }
-        }
-
     ]).exec()
-     console.log(totalproductprice)
-    }
-    
-    
+    let totalPrice = cartcoll.reduce((previous, current) => previous+current.total,0)
+    return res.status(200).json({data:{products:cartcoll,totalPriceInCart:totalPrice}})
 })
-
-
-
-
-
 
 module.exports = { userrouter }
