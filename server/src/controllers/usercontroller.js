@@ -1,6 +1,7 @@
 const { Router } = require('express');
 const { productModel, cartModel } = require('../database/schema');
-
+const mongoose = require("mongoose")
+const { Types: { ObjectId: ObjectId }, } = require("mongoose");
 
 let userrouter = Router()
 
@@ -28,8 +29,9 @@ userrouter.get('/product/all', async (req, res) => {
 });
 
 userrouter.get('/product/get', async (req, res) => {
+    console.log(req.query.id);
     try {
-        const product = await productModel.findById(req.query.id);
+        const product = await productModel.findOne({ _id: new ObjectId(req.query.id) });
         return res.json({ data: product });
     } catch (err) { console.log(err); }
 });
