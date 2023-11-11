@@ -108,28 +108,22 @@ userrouter.get("/cart",async(req,res)=>{
 })
 
 
-
-
-
-//ippo chyadadhu he he
-
 userrouter.patch("/cart/incordecincart",async(req,res)=>{
     let count=parseInt(req.body.count);
-    console.log(count)
-    let quntity=parseInt(req.body.quntity);
-    console.log(quntity)
-    console.log(req.headers.data.id)
-    console.log(req.body.productid)
+    let prod_doc = await productModel.findOne({_id:new ObjectId(req.body.productid)})
+    let user_cart = await cartModel.findOne({userid:req.headers.data.id})
 
-    if(quntity==1 && count==-1){
-       await cartModel.findOneAndUpdate({userid:req.headers.data.id},{
-          $pull:{products:{prodId:new ObjectId(req.body.productid)}}},{new:true})
+    let item = user_cart.products.find((obj)=>obj.prodId.toString() === prod_doc._id.toString() )
+
+    if(item.quntity==1 && count==-1){
+        await cartModel.findOneAndUpdate({userid:req.headers.data.id},{
+            $pull:{products:{prodId:new ObjectId(req.body.productid)}}},{new:true})
+        res.status(200).json({data:{_id:req.body.productid,quntity:item.quntity+count,totalCost:totalCost}})
     }else{
-    await  cartModel.findOneAndUpdate({userid:req.headers.data.id,"products.prodId":new ObjectId(req.body.productid)},{
-        $inc:{"products.$.quntity":count}
-    })
+        await  cartModel.findOneAndUpdate({userid:req.headers.data.id,"products.prodId":new ObjectId(req.body.productid)},{
+            $inc:{"products.$.quntity":count}},{new:true})
+        res.status(200).json({data:{_id:req.body.productid,quntity:item.quntity+count,}})
     }
-    
 })
 
 //ok

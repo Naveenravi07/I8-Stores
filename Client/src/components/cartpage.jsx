@@ -1,7 +1,7 @@
 import DeleteIcon from '@mui/icons-material/Delete'
 
-export default function CartPage({cartData}){
-
+export default function CartPage({cartData,changeQunty}){
+    
     return(
         <section>
         <div class="ProductDetails">
@@ -14,7 +14,6 @@ export default function CartPage({cartData}){
         <th>Quantity</th>
         <th>Remove</th>
         </tr>
-
         {
             cartData &&
             cartData.products.map(({productdetails,quntity})=>{
@@ -26,9 +25,9 @@ export default function CartPage({cartData}){
                     <td>{productdetails.prodName}</td>
                     <td>
                     <div class="pcount">
-                    <div><button>+</button></div>
+                    <div><button onClick={()=>changeQunty(productdetails._id,quntity,1)}>+</button></div>
                     <div><span style={{ fontWeight: 500,color:'black',padding:'6px',fontFamily:'Poppins'}}>{quntity}</span></div>
-                    <div><button>-</button></div>
+                    <div><button onClick={()=>changeQunty(productdetails._id,quntity,-1)}>-</button></div>
                     </div>
                     </td>
                     <td><button><DeleteIcon style={{transform:'scale(1.8)',fontSize:'12px'}}/></button></td>
