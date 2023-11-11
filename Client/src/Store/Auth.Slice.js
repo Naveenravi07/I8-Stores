@@ -6,8 +6,10 @@ const AuthSlice = createSlice({
     initialState: { loggedIn: null,token:null },
     reducers: {
         loginUser: (state, action) => {
-            state.loggedIn = true;
-            state.token = action.payload.token
+            return{
+                loggedIn:true,
+                token:action.payload.token
+            }
         },
         logoutUser: async(state) => {
             await storage.removeItem('persist:root')
