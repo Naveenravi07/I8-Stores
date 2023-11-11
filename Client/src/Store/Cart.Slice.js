@@ -8,13 +8,21 @@ const cartSlice = createSlice({
             let product = action.payload
             let existItem = state.cartItems.find((obj)=>obj._id === product._id)
             if(!existItem){
+                product.quantity = 1
                 return {
                     ...state,
                     cartItems:[...state.cartItems,product]
                 }
+            }else{
+                let productIdx = state.cartItems[existItem]
+                productIdx.quantity += 1
+                return {
+                    ...state,
+                    cartItems:[...state.cartItems]
+                }
             }
         },
-        removeFromCart: async(state) => {
+        removeFromCart: async(state,action) => {
             let product = action.payload
             let existItem = state.cartItems.find((obj)=>obj._id === product._id)
             if(existItem){
@@ -24,6 +32,7 @@ const cartSlice = createSlice({
                 }
             }
         },
+        
     }
 })
 export default cartSlice.reducer

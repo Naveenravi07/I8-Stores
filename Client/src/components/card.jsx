@@ -28,7 +28,7 @@ export default function Card({prodName,proId, prodDesc, prodPrice,addtoCart}) {
             <StarIcon />
             </ul>
             <p className="item-price" style={{ textAlign: 'center', fontSize: '1.5rem', marginBottom: '0.5rem' }}><sup>$</sup>{prodPrice}</p>
-            <button  onClick={()=>addtoCart(proId)}
+            <button  onClick={()=>addtoCart({prodName,proId,prodDesc,prodPrice})}
                 className="item-cart-btn" style={{ border: 'none', backgroundColor: 'transparent', margin: '0 auto', width: '100%', border: '1px', fontWeight: 'bold', padding: '.5rem 1rem', backgroundColor: 'rgb(200, 142, 254)', color: '#fff', borderRadius: '2rem', fontSize: '1.2rem', fontWeight: 200, position: 'relative', cursor: 'pointer', transition: 'all .3s linear' }}>
                 Add To Cart <span style={{ paddingLeft: '10px' }}><i className="fa-solid fa-cart-shopping"></i></span>
             </button>

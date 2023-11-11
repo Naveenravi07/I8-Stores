@@ -2,13 +2,15 @@ import instance from "@/Helpers/Config/axios.config"
 import Card from "@/components/card"
 import { toast } from "react-toastify"
 import { useState, useEffect } from 'react'
-import { useSelector } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import { useRouter } from "next/router"
 import Navbarv2 from '../components/Navbarv2'
+import { addToCart } from "@/Store/Cart.Slice"
 
 export default function all() {
     let user = useSelector((state)=>state.auth)
     let [products, setProducts] = useState([])
+    let dispatch = useDispatch()
     let router = useRouter()
 
     const fetch_all_products = async () => {
@@ -18,9 +20,15 @@ export default function all() {
     }
 
     const add_to_cart = async(product) => {
-        await instance.post('/user/addtocart',{productid:product})
-            .then((response)=>toast.dark("Added to cart"))
-            .catch((err)=>toast.error("error occured"))
+        await instance.post('/user/addtocart',{productid:product.proId})
+            .then((response)=>{
+                dispatch(addToCart(product))
+                toast.dark("Added to cart")
+            })
+            .catch((err)=>{
+                console.log(err)
+                toast.error("error occured")
+            })
     }
 
     useEffect(() => {
