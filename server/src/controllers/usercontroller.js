@@ -108,11 +108,6 @@ userrouter.get("/cart",async(req,res)=>{
 })
 
 
-
-
-
-//ippo chyadadhu he he
-
 userrouter.patch("/cart/incordecincart",async(req,res)=>{
     let count=parseInt(req.body.count);
     console.log(count)
