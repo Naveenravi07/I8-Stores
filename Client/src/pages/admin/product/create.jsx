@@ -1,5 +1,5 @@
 import instance from '@/Helpers/Config/axios.config';
-import {  useRouter } from 'next/router';
+import { useRouter } from 'next/router';
 import React, { useState } from 'react';
 import { toast } from "react-toastify";
 
@@ -23,15 +23,16 @@ export default function Create() {
                 if (response.status === 200) {
                     toast("Succsefully Saved")
                     router.push('/')
-                } 
+                }
             })
-            .catch((err)=>{
+            .catch((err) => {
                 toast.dark(err.response.data?.msg)
             })
     };
     return (
         <>
-            <section class="container" >
+            <section class="container" style={{ marginTop: '10rem' }}>
+
                 <header>Add to product</header>
                 <form action="#" class="form" method="post">
                     <div class="input-box">

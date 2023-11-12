@@ -32,7 +32,7 @@ function Sidebar() {
     const h2Style = {
         fontWeight: 'normal',
         marginBottom: '0',
-        paddingTop:'10px'
+        paddingTop: '10px'
     };
 
     const ulStyle = {
@@ -95,17 +95,17 @@ function Sidebar() {
 
     return (
         <>
-        <nav style={menuStyle} tabIndex="0">
-            <div class="smartphone-menu-trigger"></div>
-            <header style={avatarStyle}>
-                <Image src={userImg} style={imgStyle} height={150}width={210} />
-                <h2 style={h2Style}>ADMIN</h2>
-            </header>
-            <ul style={ulStyle}>
-                <li tabIndex="0" class="icon-dashboard" style={{ ...liStyle, ...iconDashboardStyle }}><span style={spanStyle}>Dashboard</span></li>
-                <li tabIndex="0" class="icon-customers" style={{ ...liStyle, ...iconCustomersStyle }} onClick={()=>router.push('/admin/product/create')}><span style={spanStyle}>Add Product</span></li>
-            </ul>
-        </nav>
+            <nav style={menuStyle} tabIndex="0" >
+                <div class="smartphone-menu-trigger" ></div>
+                <header style={avatarStyle} >
+                    <Image src={userImg} style={imgStyle} height={150} width={210} />
+                    <h2 style={h2Style}>ADMIN</h2>
+                </header>
+                <ul style={ulStyle}>
+                    <li tabIndex="0" class="icon-dashboard" style={{ ...liStyle, ...iconDashboardStyle }}><span style={spanStyle}>Dashboard</span></li>
+                    <li tabIndex="0" class="icon-customers" style={{ ...liStyle, ...iconCustomersStyle }} onClick={() => router.push('/admin/product/create')}><span style={spanStyle}>Add Product</span></li>
+                </ul>
+            </nav >
 
         </>
     )

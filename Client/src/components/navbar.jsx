@@ -2,6 +2,7 @@ import React from 'react';
 
 const navStyle = {
   position: 'relative',
+  marginBottom: '10rem',
 };
 
 const columnStyle = {
