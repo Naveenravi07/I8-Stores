@@ -25,9 +25,9 @@ export default function CartPage({cartData,changeQunty}){
                     <td>{productdetails.prodName}</td>
                     <td>
                     <div class="pcount">
-                    <div><button onClick={()=>changeQunty(productdetails._id,quntity,1)}>+</button></div>
+                    <div><button onClick={()=>changeQunty(productdetails._id,1)}>+</button></div>
                     <div><span style={{ fontWeight: 500,color:'black',padding:'6px',fontFamily:'Poppins'}}>{quntity}</span></div>
-                    <div><button onClick={()=>changeQunty(productdetails._id,quntity,-1)}>-</button></div>
+                    <div><button onClick={()=>changeQunty(productdetails._id,-1)}>-</button></div>
                     </div>
                     </td>
                     <td><button><DeleteIcon style={{transform:'scale(1.8)',fontSize:'12px'}}/></button></td>

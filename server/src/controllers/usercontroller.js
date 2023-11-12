@@ -8,7 +8,6 @@ userrouter.get('/product/all', async (req, res) => {
     try {
         const product = await productModel.find()
         const totalproductsincart = await cartModel.findOne({ userid:req.headers.data.id});
-        console.log(totalproductsincart)
         let total = 0;
 
         if (totalproductsincart != null) {
@@ -26,7 +25,6 @@ userrouter.get('/product/all', async (req, res) => {
 });
 
 userrouter.get('/product/get', async (req, res) => {
-    console.log(req.query.id);
     try {
         const product = await productModel.findOne({ _id: new ObjectId(req.query.id) });
         return res.json({ data: product });
@@ -49,8 +47,8 @@ userrouter.post("/addtocart",async(req,res)=>{
         res.status(200).send({data:cart})
     }else{
         let convert=new ObjectId(req.body.productid)
-        let sameelem=findcart.products.findIndex(product=>product.prodId.toString() === convert.toString())
-        console.log(sameelem)
+        let sameelem = findcart.products.findIndex(product=>product.prodId.toString() === convert.toString())
+
         if(sameelem !=-1){
             let cart = await cartModel.findOneAndUpdate({userid:req.headers.data.id,'products.prodId':convert},{
                 $inc:{'products.$.quntity':1}},{new:true})
@@ -114,11 +112,10 @@ userrouter.patch("/cart/incordecincart",async(req,res)=>{
     let user_cart = await cartModel.findOne({userid:req.headers.data.id})
 
     let item = user_cart.products.find((obj)=>obj.prodId.toString() === prod_doc._id.toString() )
-
     if(item.quntity==1 && count==-1){
         await cartModel.findOneAndUpdate({userid:req.headers.data.id},{
             $pull:{products:{prodId:new ObjectId(req.body.productid)}}},{new:true})
-        res.status(200).json({data:{_id:req.body.productid,quntity:item.quntity+count,totalCost:totalCost}})
+        res.status(200).json({data:{_id:prod_doc._id,quntity:0}})
     }else{
         await  cartModel.findOneAndUpdate({userid:req.headers.data.id,"products.prodId":new ObjectId(req.body.productid)},{
             $inc:{"products.$.quntity":count}},{new:true})

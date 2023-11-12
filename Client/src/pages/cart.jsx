@@ -13,24 +13,30 @@ export default function Cart(){
     let fetch_user_cart = async() =>{
         await instance.get('/user/cart')
         .then((response)=>setCartData(response.data.data))
-        .catch((err)=>toast.error("Error occured"))
+        .catch(()=>toast.error("Error occured"))
     }
     
-    let change_prod_quantity = async(proId,quntiy,count)=>{
-       await instance.patch("/user/cart/incordecincart",{count,quntity:quntiy,productid:proId})
+    let change_prod_quantity = async(proId,count)=>{
+       await instance.patch("/user/cart/incordecincart",{count,productid:proId})
         .then((response)=>{
-            let updatedProducts = cartData.products.map((obj,index)=>obj.item !== response.data.data._id ? obj : {...obj,quntity:response.data.data.quntity})
+            let updatedProducts = cartData.products.map((obj)=>{
+               if( obj.item !== response.data.data._id ) return obj 
+                else{
+                    if(response.data.data.quntity>0){
+                        return {...obj,quntity:response.data.data.quntity}
+                    }else{
+                        return null
+                    }
+                }})
+             updatedProducts = updatedProducts.filter((obj)=>obj !== null)
             let total = cartData.products.reduce((acc,val)=>{
                 if(val.item==proId){
-                    console.log(proId)
-                    console.log(val)
                   acc = acc+(count*val.productdetails.prodprice)
                 }
                 return acc
             },cartData.totalPriceInCart)
 
             setCartData({products:updatedProducts,totalPriceInCart:total})
-            toast.dark("Added to cart")
         })
         .catch((err)=>{
             console.log(err)
