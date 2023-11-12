@@ -44,6 +44,26 @@ export default function Cart(){
         })
     }
 
+    let remove_product_from_cart = async(proId) =>{
+        await instance.patch('/user/cart/remove',{productid:proId})
+        .then((response)=>{
+            let updatedproducts = cartData.products.map((obj)=>{
+               if( obj.item !== response.data.data._id ) return obj 
+                else{
+                    return null
+                }
+            }) 
+            updatedproducts = updatedproducts.filter((obj)=>obj!==null)
+            let total = cartData.products.reduce((acc,val)=>{
+                if(val.item === proId){
+                  acc = acc-(val.quntity*val.productdetails.prodprice)
+                }
+                return acc
+            },cartData.totalPriceInCart)
+            setCartData({products:updatedproducts,totalPriceInCart:total})
+        })
+    }
+
     useEffect(() => {
         if(!user || user.token == null || user.loggedIn == false ){
             toast.dark("You must login")
@@ -54,6 +74,6 @@ export default function Cart(){
     }, [user,])
 
     return(
-        <CartPage cartData={cartData} changeQunty={change_prod_quantity} />
+        <CartPage cartData={cartData} changeQunty={change_prod_quantity} remove_product={remove_product_from_cart} />
     )
 }

@@ -125,11 +125,10 @@ userrouter.patch("/cart/incordecincart",async(req,res)=>{
 
 //ok
 userrouter.patch("/cart/remove",async(req,res)=>{
-    console.log(req.body.productid)
-    console.log(req.headers.data.id)
     await cartModel.findOneAndUpdate({userid:req.headers.data.id},{
        $pull:{products:{prodId:new ObjectId(req.body.productid)}}
    })
+    res.status(200).json({data:{_id:req.body.productid}})
 })
 
 
