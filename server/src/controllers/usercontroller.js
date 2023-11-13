@@ -55,11 +55,11 @@ userrouter.post("/addtocart",async(req,res)=>{
 
         if(sameelem !=-1){
             let cart = await cartModel.findOneAndUpdate({userid:req.headers.data.id,'products.prodId':convert},
-            {
-                $inc:{'products.$.quntity':1},
-                $set:{totalPrice:price}
-            },
-            {new:true})
+                {
+                    $inc:{'products.$.quntity':1},
+                    $set:{totalPrice:price}
+                },
+                {new:true})
             res.status(200).send({data:cart})
         }else{
             let cart = await cartModel.findOneAndUpdate({userid:req.headers.data.id},{
@@ -69,13 +69,11 @@ userrouter.post("/addtocart",async(req,res)=>{
     }
 })
 
-
 userrouter.get("/cart",async(req,res)=>{
     let cartcoll=await cartModel.aggregate([
         {
             $match:{userid:req.headers.data.id}
         },
-
 
         {
             $unwind: "$products"
@@ -83,8 +81,6 @@ userrouter.get("/cart",async(req,res)=>{
         {
             $project:{
                 item:"$products.prodId",
-                quntity:"$products.quntity",
-                totalPrice:"$totalPrice"
                 quntity:"$products.quntity",
                 totalPrice:"$totalPrice"
             }
@@ -103,7 +99,6 @@ userrouter.get("/cart",async(req,res)=>{
                 item:1,
                 quntity:1,
                 totalPrice:1,
-                totalPrice:1,
                 productdetails: { $arrayElemAt: [ "$newcollection", 0 ] },
             }
         },
@@ -118,23 +113,10 @@ userrouter.get("/cart",async(req,res)=>{
                     }
                 },
                 totalPrice:{$first:"$totalPrice"}
-            $group:{
-                _id:null,
-                products: {
-                    $push: {
-                        item: "$item",
-                        quntity: "$quntity",
-                        productdetails: "$productdetails",
-                    }
-                },
-                totalPrice:{$first:"$totalPrice"}
             }
         },
 
-
     ]).exec()
-    let products = cartcoll[0].products
-    return res.status(200).json({data:{products}})
     let products = cartcoll[0].products
     return res.status(200).json({data:{products}})
 })
@@ -164,8 +146,8 @@ userrouter.patch("/cart/remove",async(req,res)=>{
     let selected_item = cart_doc.products.find((obj)=>obj.prodId.toString()===prod_doc._id.toString())
     let price = cart_doc.totalPrice-(selected_item.quntity*prod_doc.prodprice)
     await cartModel.findOneAndUpdate({userid:req.headers.data.id},{
-       $pull:{products:{prodId:new ObjectId(req.body.productid)}},$set:{totalPrice:price }
-   })
+        $pull:{products:{prodId:new ObjectId(req.body.productid)}},$set:{totalPrice:price }
+    })
     res.status(200).json({data:{_id:req.body.productid}})
 })
 
@@ -174,7 +156,7 @@ userrouter.get("/cart/checkout", async (req, res) => {
     let userID = req.headers.data.id;
     let totalamount = 300;
     var instance = new Razorpay({ key_id: 'rzp_test_bQuC3tCBEV6iGn', key_secret: 'WTS4y1ORhsbXGOS4eMzbPFir' })
-    
+
     instance.orders.create({
         amount: totalamount * 100,
         currency: "INR",
@@ -182,7 +164,7 @@ userrouter.get("/cart/checkout", async (req, res) => {
         notes: {
             key1: "value3",
             key2: "value2"
-        
+
         }
     }, function (err, order) {
         console.log(order)
