@@ -23,7 +23,6 @@ export default function App({ Component, pageProps }) {
         <Provider store={Store}>
         <PersistGate loading={null} persistor={persistor} >
         <div>
-        <Navbarv2 />
         <ToastContainer />
         <Component {...pageProps} />
         </div>

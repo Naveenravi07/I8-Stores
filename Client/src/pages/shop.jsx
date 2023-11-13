@@ -34,8 +34,8 @@ export default function all() {
 
     return (
         <>
-        <Navbarv2 />
-        <div style={{ display: 'flex', flexDirection: "row", flexWrap: "wrap", gap: '3rem', justifyContent: 'center', marginTop: '75rem' }}>
+        <Navbarv2></Navbarv2>
+        <div style={{ position:'relative',display: 'flex', flexDirection: "row", flexWrap: "wrap", gap: '3rem',width:'90vw',height:'70vh'}}>
             {
                 products && products.map((item) =>
                     <Card  prodPrice={item.prodprice} proId={item._id} prodName={item.prodName} prodDesc={item.proddesc} addtoCart={(id)=>add_to_cart(id)} />
