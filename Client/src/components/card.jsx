@@ -17,7 +17,7 @@ export default function Card({prodName,proId, prodDesc, prodPrice,prodImg,addtoC
             <h2 className="item-heading" onClick={() => onCardClick(proId)} style={{ cursor: 'pointer', textTransform: 'capitalize', textAlign: 'center', justifyContent: 'center', fontFamily: 'DM Sans, sans-serif', height: '3rem', marginBottom: '3rem' }}>
                 {prodName}
             </h2>
-            <p className="item-description" onClick={() => onCardClick(proId)} style={{ cursor: 'pointer', margin: '.5rem 0', fontSize: '.9rem', fontWeight: 200, opacity: '80%', lineHeight: '0.5 rem', height: '12rem' }}>
+            <p className="item-description" onClick={() => onCardClick(proId)} style={{ cursor: 'pointer', margin: '.5rem 0', fontSize: '.9rem', fontWeight: 200, opacity: '80%', lineHeight: '0.5 rem', height: '9rem' }}>
                 {prodDesc}
             </p>
             <ul className="rating" style={{ textAlign: 'center' }}>
