@@ -117,6 +117,9 @@ userrouter.get("/cart",async(req,res)=>{
         },
 
     ]).exec()
+    if(cartcoll.length <=0 || cartcoll[0].products.length <=0 ){
+        return res.status(200).json({data:{products:[],totalPriceInCart:0}})
+    }
     return res.status(200).json({data:{products:cartcoll[0].products,totalPriceInCart:cartcoll[0].totalPrice}})
 })
 
@@ -144,31 +147,35 @@ userrouter.patch("/cart/remove",async(req,res)=>{
     let cart_doc = await cartModel.findOne({userid:req.headers.data.id})
     let selected_item = cart_doc.products.find((obj)=>obj.prodId.toString()===prod_doc._id.toString())
     let price = cart_doc.totalPrice-(selected_item.quntity*prod_doc.prodprice)
-    await cartModel.findOneAndUpdate({userid:req.headers.data.id},{
+     await cartModel.findOneAndUpdate({userid:req.headers.data.id},{
         $pull:{products:{prodId:new ObjectId(req.body.productid)}},$set:{totalPrice:price }
-    })
+    },{new:true})
     res.status(200).json({data:{_id:req.body.productid}})
 })
 
 
 userrouter.get("/cart/checkout", async (req, res) => {
+    try{
     let userID = req.headers.data.id;
-    let totalamount = 300;
-    var instance = new Razorpay({ key_id: 'rzp_test_bQuC3tCBEV6iGn', key_secret: 'WTS4y1ORhsbXGOS4eMzbPFir' })
+    let total = await cartModel.findOne({userid:userID})
+
+    var instance = new Razorpay({ key_id: process.env.RAZORPAY_KEYID, key_secret: process.env.RAZORPAY_SECRET })
 
     instance.orders.create({
-        amount: totalamount * 100,
+        amount: total.totalPrice*100,
         currency: "INR",
         receipt: userID,
         notes: {
             key1: "value3",
             key2: "value2"
-
         }
     }, function (err, order) {
-        console.log(order)
         res.json({data:order})
     });
+
+    }catch(err){
+        console.log(err)
+    }
 });
 
 
