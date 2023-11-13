@@ -2,7 +2,7 @@ import React from 'react';
 import StarIcon from '@mui/icons-material/Star';
 import { useRouter } from 'next/router';
 
-export default function Card({prodName,proId, prodDesc, prodPrice,addtoCart}) {
+export default function Card({prodName,proId, prodDesc, prodPrice,prodImg,addtoCart}) {
     let router = useRouter()
     let onCardClick = (id) => router.push(`/product/${id}`)
 
@@ -12,7 +12,7 @@ export default function Card({prodName,proId, prodDesc, prodPrice,addtoCart}) {
             <div onClick={()=>onCardClick(proId)} className="item-top" style={{ cursor:'pointer',display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
             </div>
             <div onClick={()=>onCardClick(proId)} className="main-item" style={{cursor:'pointer', width: '200px', display: 'block', margin: '0 auto' }}>
-                <img style={{ width: '180px', paddingLeft: '15px', paddingBottom: '5px' }} src="https://i0.wp.com/www.smartprix.com/bytes/wp-content/uploads/2023/01/Asus-ROG.jpg?ssl=1&quality=80&w=f" alt="" />
+                <img style={{ width: '180px', paddingLeft: '15px', paddingBottom: '5px' }} src={prodImg} alt="" />
             </div>
             <h2 className="item-heading" onClick={()=>onCardClick(proId)} style={{ cursor:'pointer',textTransform: 'capitalize', textAlign: 'center', justifyContent: 'center', fontFamily: 'DM Sans, sans-serif' }}>
                 {prodName}

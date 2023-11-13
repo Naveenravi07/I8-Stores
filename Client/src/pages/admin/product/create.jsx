@@ -1,4 +1,6 @@
 import instance from '@/Helpers/Config/axios.config';
+import {Progress} from '@mantine/core';
+import axios from 'axios';
 import {  useRouter } from 'next/router';
 import React, { useState } from 'react';
 import { toast } from "react-toastify";
@@ -13,12 +15,14 @@ export default function Create() {
     const [prodprice, setprodPrice] = useState();
     const [prodctg, setprodctg] = useState();
     const [proddesc, setproddesc] = useState();
-    const [prodimg, setprodimg] = useState();
     const [prodqunt, setprodqunt] = useState();
+    const [progress,setProgress] = useState(0);
+    const [prodImgKey,setProdImageKey] = useState(null)
 
     const handleSubmit = async (e) => {
+        if(progress !== 100) return toast.dark("Please wait for the image to upload")
         e.preventDefault();
-        await instance.post('/admin/product/create', { prodName, prodbrand, prodprice, prodctg, proddesc, prodimg, prodqunt, })
+        await instance.post('/admin/product/create', { prodName, prodbrand, prodprice, prodctg, proddesc,prodqunt,prodimg:prodImgKey })
             .then((response) => {
                 if (response.status === 200) {
                     toast("Succsefully Saved")
@@ -29,6 +33,29 @@ export default function Create() {
                 toast.dark(err.response.data?.msg)
             })
     };
+
+
+    const handleThumbnailUpload = async(e)=>{ 
+        let file = e.target.files[0] 
+        let body = {fileName:`${file.name}`,contentType:file.type,isPublic:true,bucketName:'i8storesproducts'}
+        const preSignedUrl = await instance.post("/servicehelpers/aws/generate_s3_presignedurl",body) 
+        await axios.put(preSignedUrl.data.data.url,file,{
+            headers: {
+                "Content-Type": body.fileType,
+            },
+            onUploadProgress: (e) => {
+                const percentCompleted = Math.round((e.loaded * 100) / e.total);
+                setProgress(percentCompleted)
+            },
+        })
+            .then(()=>{
+                setProdImageKey(preSignedUrl.data.data.key)
+            })
+            .catch(()=>{
+                toast.error("Error Occured")
+            })
+    }
+
     return (
         <>
             <section class="container" >
@@ -67,7 +94,8 @@ export default function Create() {
 
                     <div class="input-box">
                         <label>Product Image</label>
-                        <input type="file" required onChange={(e) => setprodimg(e.target.value)} />
+                        <input type="file" onChange={(e)=>handleThumbnailUpload(e)} required  />
+                        <Progress value={progress} />
                     </div>
 
                     <div class="input-box">

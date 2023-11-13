@@ -28,9 +28,8 @@ export default function ProductPage() {
                     product &&
                     <div className="details" >
                         <div className="big-img">
-                            <img src="" alt="" />
+                            <img src={product.prodimg} alt="" />
                         </div>
-
                         <div className="box">
                             <div className="row">
                                 <h2>{product.prodName}</h2>
