@@ -117,8 +117,7 @@ userrouter.get("/cart",async(req,res)=>{
         },
 
     ]).exec()
-    let products = cartcoll[0].products
-    return res.status(200).json({data:{products}})
+    return res.status(200).json({data:{products:cartcoll[0].products,totalPriceInCart:cartcoll[0].totalPrice}})
 })
 
 userrouter.patch("/cart/incordecincart",async(req,res)=>{

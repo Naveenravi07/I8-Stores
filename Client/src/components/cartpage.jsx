@@ -64,6 +64,7 @@ export default function CartPage({ cartData, changeQunty, remove_product }) {
                     </tr>
                     {
                         cartData &&
+                        Object.keys(cartData).includes('products' )&&
                         cartData.products.map(({ productdetails, quntity }) => {
                             return (
                                 <>
@@ -88,8 +89,7 @@ export default function CartPage({ cartData, changeQunty, remove_product }) {
             </div>
             <div class="CardAndCheckout">
                 <p>ORDER SUMMARY</p>
-                <p>ITEMS: <span>{cartData && cartData.products.length}</span></p>
-                <p>PROMO CODE:</p>
+                <p>ITEMS: <span>{cartData && Object.keys(cartData).includes('products' )&& cartData.products.length}</span></p>  <p>PROMO CODE:</p>
                 <input type="text" placeholder="AAA-BBB-YYY-CCC" />
                 <div class="checkbtn">
 
