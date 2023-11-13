@@ -1,6 +1,7 @@
-const { Router} = require('express');
+const { Router } = require('express');
 const { productModel, cartModel } = require('../database/schema');
 var ObjectId = require("mongodb").ObjectId;
+const Razorpay = require("razorpay");
 
 let userrouter = Router()
 
@@ -9,6 +10,7 @@ userrouter.get('/product/all', async (req, res) => {
         const product = await productModel.find()
         const totalproductsincart = await cartModel.findOne({ userid:req.headers.data.id});
         let total = 0;
+
 
         if (totalproductsincart != null) {
             let productarr = totalproductsincart.products;
@@ -37,9 +39,9 @@ userrouter.post("/addtocart",async(req,res)=>{
     let findcart=await cartModel.findOne({userid:req.headers.data.id})
     let productdata = await productModel.findOne({_id:new ObjectId(req.body.productid)})
 
-    const product={
-        prodId:new ObjectId(req.body.productid),
-        quntity:1
+    const product = {
+        prodId: new ObjectId(req.body.productid),
+        quntity: 1
     }
 
     if(findcart==null ||findcart.products==null || findcart.products==undefined){
@@ -74,12 +76,15 @@ userrouter.get("/cart",async(req,res)=>{
             $match:{userid:req.headers.data.id}
         },
 
+
         {
             $unwind: "$products"
         },
         {
             $project:{
                 item:"$products.prodId",
+                quntity:"$products.quntity",
+                totalPrice:"$totalPrice"
                 quntity:"$products.quntity",
                 totalPrice:"$totalPrice"
             }
@@ -98,6 +103,7 @@ userrouter.get("/cart",async(req,res)=>{
                 item:1,
                 quntity:1,
                 totalPrice:1,
+                totalPrice:1,
                 productdetails: { $arrayElemAt: [ "$newcollection", 0 ] },
             }
         },
@@ -112,14 +118,26 @@ userrouter.get("/cart",async(req,res)=>{
                     }
                 },
                 totalPrice:{$first:"$totalPrice"}
+            $group:{
+                _id:null,
+                products: {
+                    $push: {
+                        item: "$item",
+                        quntity: "$quntity",
+                        productdetails: "$productdetails",
+                    }
+                },
+                totalPrice:{$first:"$totalPrice"}
             }
         },
+
 
     ]).exec()
     let products = cartcoll[0].products
     return res.status(200).json({data:{products}})
+    let products = cartcoll[0].products
+    return res.status(200).json({data:{products}})
 })
-
 
 userrouter.patch("/cart/incordecincart",async(req,res)=>{
     let count=parseInt(req.body.count);
@@ -150,6 +168,28 @@ userrouter.patch("/cart/remove",async(req,res)=>{
    })
     res.status(200).json({data:{_id:req.body.productid}})
 })
+
+
+userrouter.get("/cart/checkout", async (req, res) => {
+    let userID = req.headers.data.id;
+    let totalamount = 300;
+    var instance = new Razorpay({ key_id: 'rzp_test_bQuC3tCBEV6iGn', key_secret: 'WTS4y1ORhsbXGOS4eMzbPFir' })
+    
+    instance.orders.create({
+        amount: totalamount * 100,
+        currency: "INR",
+        receipt: userID,
+        notes: {
+            key1: "value3",
+            key2: "value2"
+        
+        }
+    }, function (err, order) {
+        console.log(order)
+        res.json({data:order})
+    });
+});
+
 
 
 module.exports = { userrouter }
