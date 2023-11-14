@@ -9,7 +9,7 @@ const cors = require('cors')
 
 const PORT = 42069;
 const app = express();
-app.use(cors())
+app.use(cors({origin:"*"}))
 
 
 app.use(express.urlencoded({ extended: true }));
