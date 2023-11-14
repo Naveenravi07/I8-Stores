@@ -20,6 +20,10 @@ app.use('/admin', AuthMiddileWare, AdminRouter)
 app.use('/user', AuthMiddileWare, userrouter)
 app.use('/servicehelpers',AuthMiddileWare,ServiceHelpersRouter)
 
+app.get('/ping',(req,res)=>{
+    res.send('pong')
+})
+
 app.listen(PORT, async () => {
     console.log("Server started on port :" + PORT);
     await connectDb()
