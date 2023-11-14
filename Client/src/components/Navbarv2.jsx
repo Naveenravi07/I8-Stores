@@ -12,7 +12,7 @@ import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
 import { useRouter } from 'next/router';
 import { logoutUser } from '@/Store/Auth.Slice';
-
+import { palette } from '@mui/system';
 
 const navItems = [{ label: 'Shop', href: '/shop' }, { label: 'Cart', href: '/cart' }];
 
@@ -50,9 +50,9 @@ function DrawerAppBar() {
     }
 
     return (
-        <Box sx={{ display: 'flex' }}>
+        <Box >
             <CssBaseline />
-            <AppBar component="nav" style={{ marginBottom: '10rem ' }}>
+            <AppBar component="nav" style={{ marginBottom: '10rem ',backgroundColor: '#9b0ec2'}}>
                 <Toolbar>
 
                     <Typography
