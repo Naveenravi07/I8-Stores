@@ -81,7 +81,7 @@ export default function Login() {
               <button onClick={(e) => handlesignUp(e)} className="form__btn-submit">Sign up</button>
             </div>
             <a href="#" className="form__forgot">Forgot Password</a>
-            <p className="form__mobile">( or <a href="#"> create an account </a> )</p>
+            <p onClick={()=>router.push('/auth/login')} className="form__mobile">( or <a href="#"> already have  an account </a> )</p>
             <p className="form__notes">
               This page is protected by reCAPTCHA, and subject to the Google <a href="">Privacy Policy</a> and
               <a href="#">Terms of service</a>.
